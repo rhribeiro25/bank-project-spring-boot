@@ -42,10 +42,4 @@ public class BankProjectSpringBootApplication {
 		bean.setValidationMessageSource(messageSource);
 		return bean;
 	}
-
-	@Bean
-	public Docket productApi() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("br.com.rhribeiro25.bank.controller")).build();
-	}
 }

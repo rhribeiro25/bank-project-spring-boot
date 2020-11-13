@@ -21,10 +21,6 @@ import java.util.Date;
 @ApiModel(value = "Requisição de Usuário")
 public class UserDTORequest {
 
-    private Long id;
-
-    private Date createdAt;
-
     @ApiModelProperty(value = "Nome do Usuário", required=true)
     @NotBlank(message = "{name.not.blank}")
     @Size(min = 7, max = 63, message = "{name.size}")
@@ -47,8 +43,6 @@ public class UserDTORequest {
 
     public UserEntity returnUserToUpdate() {
         return UserEntity.builder()
-                .id(id)
-                .createdAt(createdAt)
                 .name(name)
                 .cpf(cpf)
                 .build();

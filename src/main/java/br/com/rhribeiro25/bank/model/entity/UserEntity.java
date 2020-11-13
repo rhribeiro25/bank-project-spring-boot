@@ -36,15 +36,17 @@ public class UserEntity {
     private Date createdAt;
 
     @Column(nullable = false)
+    @ApiModelProperty(notes = "Nome do usuário", name="name", required = false, value="string")
     private String name;
 
     @Column(nullable = false, unique = true)
+    @ApiModelProperty(notes = "CPF do usuário", name="name", required = true, value="string")
     private String cpf;
 
     @EqualsAndHashCode.Exclude
-    @ApiModelProperty(value = "User associado a conta", hidden = true)
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
+    @ApiModelProperty(notes = "Conta associada ao usuário", required = true)
     private AccountEntity account;
 
 }
