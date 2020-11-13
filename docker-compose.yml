@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  api:
+    image: rhribeiro25/bank-project:latest
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - /tmp:/var/lib/app
+    depends_on:
+      - pgsql
+
+  pgsql:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: bank-project-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: rhribeiro_25@hotmail.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - 16543:80
+    depends_on:
+      - pgsql
+
+networks:
+  default:
+    external:
+      name: bank-project-net
