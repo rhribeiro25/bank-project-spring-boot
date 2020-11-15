@@ -27,6 +27,11 @@ group = 'rhribeiro25'
 version = '1.0.0'
 sourceCompatibility = '1.8'
 
+bootJar {
+	baseName = 'bank'
+	version =  '1.0.0'
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -46,12 +51,15 @@ dependencies {
 	implementation 'org.jetbrains:annotations:19.0.0'
 	implementation 'org.jetbrains:annotations:19.0.0'
 
-	//Database
-	runtimeOnly('org.postgresql:postgresql')
-
 	//Swagger
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
+
+	//Jackson
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.3'
+
+	//Database
+	runtimeOnly('org.postgresql:postgresql')
 
 	//Lombok
 	compileOnly 'org.projectlombok:lombok'

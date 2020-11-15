@@ -9,7 +9,6 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 /**
  * @author Renan Ribeiro
@@ -23,21 +22,22 @@ public class UserDTORequest {
 
     @ApiModelProperty(value = "Nome do Usuário", required=true)
     @NotBlank(message = "{name.not.blank}")
-    @Size(min = 7, max = 63, message = "{name.size}")
+    @Size(max = 127, message = "{name.size}")
     private String name;
 
     @ApiModelProperty(value = "CPF do Usuário", required=true)
     @NotBlank(message = "{cpf.not.blank}")
-    @Size(min = 11, max = 14, message = "{cpf.size}")
+    @Size(max = 14, message = "{cpf.size}")
     private String cpf;
 
-    @ApiModelProperty(value = "Conta Associada ao Usuário", hidden = true)
+    @ApiModelProperty(value = "Conta Associada ao Usuário")
     private AccountEntity account;
 
     public UserEntity returnUserToSave() {
         return UserEntity.builder()
                 .name(name)
                 .cpf(cpf)
+                .account(account)
                 .build();
     }
 
@@ -45,6 +45,7 @@ public class UserDTORequest {
         return UserEntity.builder()
                 .name(name)
                 .cpf(cpf)
+                .account(account)
                 .build();
     }
 }

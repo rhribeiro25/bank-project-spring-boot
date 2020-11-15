@@ -32,6 +32,7 @@ public class SwaggerConfig {
                 .globalResponseMessage(RequestMethod.GET, responseMessageForGET())
                 .globalResponseMessage(RequestMethod.POST, responseMessageForPOST())
                 .globalResponseMessage(RequestMethod.PUT, responseMessageForPUT())
+                .globalResponseMessage(RequestMethod.DELETE, responseMessageForPUT())
                 .securitySchemes(Arrays.asList(new BasicAuth("basicAuth")))
                 .securityContexts(Arrays.asList(securityContext()))
                 .apiInfo(apiInfo());
@@ -68,18 +69,23 @@ public class SwaggerConfig {
     {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
+                    .code(400)
+                    .message("Existe algum erro na requisição!")
+                    .responseModel(new ModelRef("Error"))
+                    .build());
+            add(new ResponseMessageBuilder()
                     .code(401)
                     .message("Sem autorização, efetue login!")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(404)
-                    .message("Houve algum problema com a requisição!")
+                    .message("O item não foi encontrado!")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("Ocorreu alguma erro no servidor")
+                    .message("Ocorreu alguma erro no servidor!")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
@@ -99,7 +105,7 @@ public class SwaggerConfig {
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("Ocorreu alguma erro no servidor")
+                    .message("Ocorreu alguma erro no servidor!")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
@@ -119,12 +125,38 @@ public class SwaggerConfig {
                     .build());
             add(new ResponseMessageBuilder()
                     .code(404)
-                    .message("Houve algum problema com a requisição!")
+                    .message("O item não foi encontrado!")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("Ocorreu alguma erro no servidor")
+                    .message("Ocorreu alguma erro no servidor!")
+                    .responseModel(new ModelRef("Error"))
+                    .build());
+        }};
+    }
+
+    private List<ResponseMessage> responseMessageForDELETE()
+    {
+        return new ArrayList<ResponseMessage>() {{
+            add(new ResponseMessageBuilder()
+                    .code(400)
+                    .message("Existe algum erro na requisição!")
+                    .responseModel(new ModelRef("Error"))
+                    .build());
+            add(new ResponseMessageBuilder()
+                    .code(401)
+                    .message("Sem autorização, efetue login!")
+                    .responseModel(new ModelRef("Error"))
+                    .build());
+            add(new ResponseMessageBuilder()
+                    .code(404)
+                    .message("O item não foi encontrado!")
+                    .responseModel(new ModelRef("Error"))
+                    .build());
+            add(new ResponseMessageBuilder()
+                    .code(500)
+                    .message("Ocorreu alguma erro no servidor!")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};

@@ -23,9 +23,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		auth.inMemoryAuthentication()
-		.withUser("user").password(encoder.encode("bank@2020")).roles("USER")
+		.withUser("user").password(encoder.encode("bankProject@2020")).roles("USER")
 		.and()
-		.withUser("admin").password(encoder.encode("bank@2020")).roles("USER", "ADMIN");
+		.withUser("admin").password(encoder.encode("bankProject@2020")).roles("USER", "ADMIN");
 	}
 	
 	@Override

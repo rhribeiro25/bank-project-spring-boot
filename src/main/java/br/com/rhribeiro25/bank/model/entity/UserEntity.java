@@ -1,11 +1,9 @@
 package br.com.rhribeiro25.bank.model.entity;
 
+import br.com.rhribeiro25.bank.model.enums.UserStatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,12 +18,9 @@ import java.util.Date;
 @Table(name = "users")
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity {
-
-    public UserEntity(){
-        this.account = new AccountEntity();
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,13 +30,16 @@ public class UserEntity {
     @Column(nullable = false)
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 127)
     @ApiModelProperty(notes = "Nome do usuário", name="name", required = false, value="string")
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 23, unique = true)
     @ApiModelProperty(notes = "CPF do usuário", name="name", required = true, value="string")
     private String cpf;
+
+    @Column(nullable = false, length = 63)
+    private UserStatusEnum status;
 
     @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

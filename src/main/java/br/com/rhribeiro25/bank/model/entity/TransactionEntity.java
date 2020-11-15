@@ -20,8 +20,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class TransactionEntity {
 
-    public TransactionEntity(){
-        this.receipt = new ReceiptEntity();
+    public TransactionEntity(ReceiptEntity receipt){
+        this.receipt = receipt;
     }
 
     @Id
