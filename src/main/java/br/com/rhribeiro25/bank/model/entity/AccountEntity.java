@@ -25,23 +25,20 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @Column(nullable = false)
     private Date createdAt;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 23, unique = true)
     private String account;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 11)
     private String agency;
 
     @EqualsAndHashCode.Exclude
-    @ApiModelProperty(value = "Conta associada ao Usuário", hidden = true)
-    @OneToOne(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "account", fetch = FetchType.EAGER)
     private UserEntity user;
 
     @EqualsAndHashCode.Exclude
-    @ApiModelProperty(value = "Conta associada as Transações", hidden = true)
     @OneToMany(mappedBy = "originAccount", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Set<TransactionEntity> transactions;
 

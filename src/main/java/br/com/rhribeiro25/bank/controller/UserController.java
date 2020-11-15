@@ -41,7 +41,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> save(@ApiParam(value = "Modelo de Usuário") @Valid @RequestBody UserDTORequest user) {
-        UserEntity newUser = userService.save(user.returnUserToSave());
+        UserEntity newUser = userService.save(user.returnUserEntity());
         return new ResponseEntity<>(UserDTOResponse.returnDtoToShow(newUser), HttpStatus.CREATED);
     }
 
@@ -53,7 +53,7 @@ public class UserController {
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @ApiParam(value = "Modelo de Usuário")
     @Valid @RequestBody  UserDTORequest user) {
-        UserEntity updateUser = userService.save(user.returnUserToSave());
+        UserEntity updateUser = userService.save(user.returnUserEntity());
         return new ResponseEntity<>(UserDTOResponse.returnDtoToShow(updateUser), HttpStatus.OK);
     }
 

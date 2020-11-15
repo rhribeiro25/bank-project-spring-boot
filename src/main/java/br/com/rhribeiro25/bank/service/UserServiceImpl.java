@@ -2,6 +2,7 @@ package br.com.rhribeiro25.bank.service;
 
 import br.com.rhribeiro25.bank.model.entity.UserEntity;
 import br.com.rhribeiro25.bank.model.enums.UserStatusEnum;
+import br.com.rhribeiro25.bank.repository.AccountRepository;
 import br.com.rhribeiro25.bank.repository.UserRepository;
 import br.com.rhribeiro25.bank.utils.Formatting;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private AccountRepository accountRepository;
+
 	@Override
 	public Set<UserEntity> findAll() {
 		return userRepository.findByStatus(UserStatusEnum.ACTIVE);
@@ -50,9 +54,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserEntity save(UserEntity user) {
 		user.setCreatedAt(new Date());
-		user.setStatus(UserStatusEnum.ACTIVE);
 		user.getAccount().setCreatedAt(new Date());
+		user.setStatus(UserStatusEnum.ACTIVE);
+		user.getAccount().setUser(user);
 		userRepository.save(user);
+
 		return user;
 	}
 

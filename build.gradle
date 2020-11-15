@@ -55,9 +55,6 @@ dependencies {
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
 
-	//Jackson
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.3'
-
 	//Database
 	runtimeOnly('org.postgresql:postgresql')
 

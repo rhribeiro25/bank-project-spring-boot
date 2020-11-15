@@ -17,7 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EntityScan(basePackages = { "br.com.rhribeiro25.bank.model.entity" })
 @EnableJpaRepositories(basePackages = { "br.com.rhribeiro25.bank.repository" })
-@EnableSwagger2
 @Slf4j
 public class BankProjectSpringBootApplication {
 
