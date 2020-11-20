@@ -20,7 +20,7 @@ public interface UserService {
 
     public UserEntity findActiveById(Long id);
 
-    public UserEntity update(UserEntity UserEntity);
+    public UserEntity update(UserEntity currentUser, UserEntity updateUser);
 
     public void delete(UserEntity lab);
 

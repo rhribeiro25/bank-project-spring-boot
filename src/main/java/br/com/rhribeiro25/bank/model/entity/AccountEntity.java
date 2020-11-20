@@ -28,6 +28,9 @@ public class AccountEntity {
     @Column(nullable = false)
     private Date createdAt;
 
+    @Column()
+    private Date updatedAt;
+
     @Column(nullable = false, length = 23, unique = true)
     private String account;
 
@@ -39,7 +42,7 @@ public class AccountEntity {
     private UserEntity user;
 
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "originAccount", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "originAccount", fetch = FetchType.LAZY)
     private Set<TransactionEntity> transactions;
 
 }

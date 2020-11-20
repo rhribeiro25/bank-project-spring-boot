@@ -28,7 +28,7 @@ version = '1.0.0'
 sourceCompatibility = '1.8'
 
 bootJar {
-	baseName = 'bank'
+	baseName = 'bank-project'
 	version =  '1.0.0'
 }
 

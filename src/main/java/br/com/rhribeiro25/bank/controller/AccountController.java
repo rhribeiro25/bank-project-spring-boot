@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(value = "Account API")
 @RestController
-@RequestMapping("/bank/account")
+@RequestMapping("/api/bank/account")
 @Slf4j
 public class AccountController {
 

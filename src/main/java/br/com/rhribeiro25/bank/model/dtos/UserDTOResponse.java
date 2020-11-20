@@ -2,6 +2,7 @@ package br.com.rhribeiro25.bank.model.dtos;
 
 import br.com.rhribeiro25.bank.model.entity.AccountEntity;
 import br.com.rhribeiro25.bank.model.entity.UserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,18 +27,22 @@ public class UserDTOResponse {
 
     private Date createdAt;
 
+    private Date updatedAt;
+
     private String name;
 
     private String cpf;
 
-    private AccountEntity account;
+    private AccountDTOResponse account;
 
     public static UserDTOResponse returnDtoToShow(UserEntity user) {
         return UserDTOResponse.builder()
                 .id(user.getId())
                 .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
                 .name(user.getName())
                 .cpf(user.getCpf())
+                .account(AccountDTOResponse.returnDtoToShow(user.getAccount()))
                 .build();
     }
 
@@ -47,8 +52,10 @@ public class UserDTOResponse {
                 UserDTOResponse.builder()
                         .id(user.getId())
                         .createdAt(user.getCreatedAt())
+                        .updatedAt(user.getUpdatedAt())
                         .name(user.getName())
                         .cpf(user.getCpf())
+                        .account(AccountDTOResponse.returnDtoToShow(user.getAccount()))
                         .build()
         ));
         return userDTOs;

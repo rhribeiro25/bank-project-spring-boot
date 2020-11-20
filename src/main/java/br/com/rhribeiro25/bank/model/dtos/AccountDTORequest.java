@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * @author Renan Ribeiro
@@ -20,11 +21,9 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class AccountDTORequest {
 
-    @NotBlank(message = "{name.not.blank}")
     @Size(max = 23, message = "{name.size}")
     private String account;
 
-    @NotBlank(message = "{cpf.not.blank}")
     @Size(max = 11, message = "{cpf.size}")
     private String agency;
 

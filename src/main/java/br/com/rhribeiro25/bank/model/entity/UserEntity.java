@@ -29,6 +29,9 @@ public class UserEntity {
     @Column(nullable = false)
     private Date createdAt;
 
+    @Column()
+    private Date updatedAt;
+
     @Column(nullable = false, length = 127)
     private String name;
 

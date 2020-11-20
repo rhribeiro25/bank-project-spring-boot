@@ -31,8 +31,8 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.GET, responseMessageForGET())
                 .globalResponseMessage(RequestMethod.POST, responseMessageForPOST())
-                .globalResponseMessage(RequestMethod.PUT, responseMessageForPUT())
-                .globalResponseMessage(RequestMethod.DELETE, responseMessageForPUT())
+                .globalResponseMessage(RequestMethod.PUT, responseMessageForPATCH())
+                .globalResponseMessage(RequestMethod.DELETE, responseMessageForDELETE())
                 .securitySchemes(Arrays.asList(new BasicAuth("basicAuth")))
                 .securityContexts(Arrays.asList(securityContext()))
                 .apiInfo(apiInfo());
@@ -80,7 +80,7 @@ public class SwaggerConfig {
                     .build());
             add(new ResponseMessageBuilder()
                     .code(404)
-                    .message("O item não foi encontrado!")
+                    .message("Não encontrado!")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
@@ -104,13 +104,18 @@ public class SwaggerConfig {
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
+                    .code(403)
+                    .message("Proibido executar essa ação!")
+                    .responseModel(new ModelRef("Error"))
+                    .build());
+            add(new ResponseMessageBuilder()
                     .code(500)
                     .message("Ocorreu alguma erro no servidor!")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
     }
-    private List<ResponseMessage> responseMessageForPUT()
+    private List<ResponseMessage> responseMessageForPATCH()
     {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
@@ -124,8 +129,13 @@ public class SwaggerConfig {
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
+                    .code(403)
+                    .message("Proibido executar essa ação!")
+                    .responseModel(new ModelRef("Error"))
+                    .build());
+            add(new ResponseMessageBuilder()
                     .code(404)
-                    .message("O item não foi encontrado!")
+                    .message("Não encontrado!")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
@@ -150,8 +160,13 @@ public class SwaggerConfig {
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
+                    .code(403)
+                    .message("Proibido executar essa ação!")
+                    .responseModel(new ModelRef("Error"))
+                    .build());
+            add(new ResponseMessageBuilder()
                     .code(404)
-                    .message("O item não foi encontrado!")
+                    .message("Não encontrado!")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
