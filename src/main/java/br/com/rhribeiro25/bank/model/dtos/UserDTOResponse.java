@@ -1,8 +1,7 @@
 package br.com.rhribeiro25.bank.model.dtos;
 
-import br.com.rhribeiro25.bank.model.entity.AccountEntity;
 import br.com.rhribeiro25.bank.model.entity.UserEntity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import br.com.rhribeiro25.bank.utils.Formatting;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,9 +24,9 @@ public class UserDTOResponse {
 
     private Long id;
 
-    private Date createdAt;
+    private String createdAt;
 
-    private Date updatedAt;
+    private String updatedAt;
 
     private String name;
 
@@ -38,11 +37,11 @@ public class UserDTOResponse {
     public static UserDTOResponse returnDtoToShow(UserEntity user) {
         return UserDTOResponse.builder()
                 .id(user.getId())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
-                .name(user.getName())
                 .cpf(user.getCpf())
+                .name(user.getName())
                 .account(AccountDTOResponse.returnDtoToShow(user.getAccount()))
+                .createdAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(user.getCreatedAt()))
+                .updatedAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(user.getUpdatedAt()))
                 .build();
     }
 
@@ -51,11 +50,11 @@ public class UserDTOResponse {
         users.forEach(user -> userDTOs.add(
                 UserDTOResponse.builder()
                         .id(user.getId())
-                        .createdAt(user.getCreatedAt())
-                        .updatedAt(user.getUpdatedAt())
-                        .name(user.getName())
                         .cpf(user.getCpf())
+                        .name(user.getName())
                         .account(AccountDTOResponse.returnDtoToShow(user.getAccount()))
+                        .createdAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(user.getCreatedAt()))
+                        .updatedAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(user.getUpdatedAt()))
                         .build()
         ));
         return userDTOs;

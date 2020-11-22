@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,13 +54,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity save(UserEntity user) {
+        user.getAccount().setBalance(BigDecimal.ZERO);
         user.getAccount().setCreatedAt(new Date());
         user.setCreatedAt(new Date());
         user.setStatus(UserStatusEnum.ACTIVE);
         user.getAccount().setUser(user);
-        userRepository.save(user);
-
-        return user;
+        return userRepository.save(user);
     }
 
     @Override
@@ -73,8 +73,7 @@ public class UserServiceImpl implements UserService {
             if (updateUser.getAccount().getAccount() != null) currentUser.getAccount().setAccount(updateUser.getAccount().getAccount());
             if (updateUser.getAccount().getAgency() != null) currentUser.getAccount().setAgency(updateUser.getAccount().getAgency());
         }
-        userRepository.save(currentUser);
-        return currentUser;
+        return userRepository.save(currentUser);
     }
 
     @Override

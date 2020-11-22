@@ -1,11 +1,10 @@
 package br.com.rhribeiro25.bank.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author Renan Ribeiro
@@ -24,14 +23,18 @@ public class ReceiptEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Double value;
+    @Column(columnDefinition="Decimal(19,2) default '0.00'")
+    private BigDecimal value;
 
     private String originName;
 
     private String destinationName;
 
     @Column(nullable = false)
-    private String transactionDate;
+    private Date transactionAt;
+
+    @EqualsAndHashCode.Exclude
+    @OneToOne(mappedBy = "receipt", fetch = FetchType.LAZY)
+    private TransactionEntity transaction;
 }
 

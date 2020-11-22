@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -37,12 +38,15 @@ public class AccountEntity {
     @Column(nullable = false, length = 11)
     private String agency;
 
+    @Column(columnDefinition="Decimal(19,2) default '0.00'")
+    private BigDecimal balance;
+
     @EqualsAndHashCode.Exclude
-    @OneToOne(mappedBy = "account", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
     private UserEntity user;
 
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "originAccount", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "originAccount", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Set<TransactionEntity> transactions;
 
 }

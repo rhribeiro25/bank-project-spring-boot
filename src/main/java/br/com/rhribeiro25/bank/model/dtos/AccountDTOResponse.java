@@ -1,17 +1,13 @@
 package br.com.rhribeiro25.bank.model.dtos;
 
 import br.com.rhribeiro25.bank.model.entity.AccountEntity;
-import br.com.rhribeiro25.bank.model.entity.UserEntity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import br.com.rhribeiro25.bank.utils.Formatting;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,24 +25,24 @@ public class AccountDTOResponse {
 
     private Long id;
 
-    private Date createdAt;
+    private String createdAt;
 
-    private Date updatedAt;
+    private String updatedAt;
 
     private String account;
 
-    private String agency;
+    private BigDecimal balance;
 
-    @JsonBackReference("account")
-    private UserDTOResponse user;
+    private String agency;
 
     public static AccountDTOResponse returnDtoToShow(AccountEntity account) {
         return AccountDTOResponse.builder()
                 .id(account.getId())
-                .createdAt(account.getCreatedAt())
-                .updatedAt(account.getUpdatedAt())
-                .account(account.getAccount())
                 .agency(account.getAgency())
+                .account(account.getAccount())
+                .balance(account.getBalance())
+                .createdAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(account.getCreatedAt()))
+                .updatedAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(account.getUpdatedAt()))
                 .build();
     }
 
@@ -55,10 +51,11 @@ public class AccountDTOResponse {
         accounts.forEach(account -> accountDTOs.add(
                 AccountDTOResponse.builder()
                         .id(account.getId())
-                        .createdAt(account.getCreatedAt())
-                        .updatedAt(account.getUpdatedAt())
-                        .account(account.getAccount())
                         .agency(account.getAgency())
+                        .account(account.getAccount())
+                        .balance(account.getBalance())
+                        .createdAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(account.getCreatedAt()))
+                        .updatedAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(account.getUpdatedAt()))
                         .build()
         ));
         return accountDTOs;

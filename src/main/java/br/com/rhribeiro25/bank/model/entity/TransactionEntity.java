@@ -17,6 +17,7 @@ import java.util.Date;
 @Table(name = "transactions")
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class TransactionEntity {
 
@@ -28,7 +29,6 @@ public class TransactionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @Column(nullable = false)
     private Date createdAt;
 
@@ -37,19 +37,19 @@ public class TransactionEntity {
 
     @EqualsAndHashCode.Exclude
     @ApiModelProperty(value = "Transação associada a Conta origem", hidden = true)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="origin_account_id", referencedColumnName = "id")
     private AccountEntity originAccount;
 
     @EqualsAndHashCode.Exclude
     @ApiModelProperty(value = "Transação associada a Conta destino", hidden = true)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="destination_account_id", referencedColumnName = "id")
     private AccountEntity destinationAccount;
 
     @EqualsAndHashCode.Exclude
     @ApiModelProperty(value = "Transação associada ao recibo", hidden = true)
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "receipt_id", referencedColumnName = "id", nullable = false)
     private ReceiptEntity receipt;
 

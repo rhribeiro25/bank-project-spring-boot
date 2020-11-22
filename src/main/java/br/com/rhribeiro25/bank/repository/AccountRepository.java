@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
-
+    public AccountEntity findAccountEntityByAccountAndAgency(String account, String agency);
 
 }

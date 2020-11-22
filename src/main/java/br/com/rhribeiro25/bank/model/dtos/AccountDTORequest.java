@@ -6,9 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * @author Renan Ribeiro
@@ -21,10 +20,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class AccountDTORequest {
 
-    @Size(max = 23, message = "{name.size}")
+    @Size(max = 23, message = "{accout.size}")
     private String account;
 
-    @Size(max = 11, message = "{cpf.size}")
+    @Size(max = 11, message = "{agency.size}")
     private String agency;
 
     public AccountEntity returnAccountEntity() {
