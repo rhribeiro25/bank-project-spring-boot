@@ -2,6 +2,7 @@ package br.com.rhribeiro25.bank.error.handler;
 
 import br.com.rhribeiro25.bank.error.ErrorDetails;
 import br.com.rhribeiro25.bank.error.ValidationErrorDetails;
+import br.com.rhribeiro25.bank.error.exception.InternalServerErrorException;
 import br.com.rhribeiro25.bank.error.exception.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .message("Arguments are not valid")
                 .timesTamp(new Date().getTime())
                 .objectName(ex.getClass().getName())
-                .errors(mapValErrors)
+                .params(mapValErrors)
                 .build();
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
@@ -55,6 +56,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .objectName(ex.getClass().getName())
                 .build();
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InternalServerErrorException.class)
+    public ResponseEntity<?> handlerInternalServerErrorException(InternalServerErrorException ex) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.name())
+                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message(ex.getMessage())
+                .timesTamp(new Date().getTime())
+                .objectName(ex.getClass().getName())
+                .build();
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

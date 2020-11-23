@@ -1,5 +1,7 @@
 package br.com.rhribeiro25.bank.service;
 
+import br.com.rhribeiro25.bank.error.exception.InternalServerErrorException;
+import br.com.rhribeiro25.bank.error.exception.NotFoundException;
 import br.com.rhribeiro25.bank.model.entity.AccountEntity;
 import br.com.rhribeiro25.bank.model.entity.ReceiptEntity;
 import br.com.rhribeiro25.bank.model.entity.TransactionEntity;
@@ -49,6 +51,40 @@ public class AccountServiceImpl implements AccountService {
 				.transactionType(TransactionTypeEnum.DEPOSIT)
 				.createdAt(new Date())
 				.destinationAccount(account)
+				.receipt(receipt)
+				.build();
+
+		receipt.setTransaction(transaction);
+		account.setTransactions(new HashSet<>());
+		transactionRepository.save(transaction);
+
+		account.getTransactions().add(transaction);
+		accountRepository.save(account);
+		return receipt;
+	}
+
+	public ReceiptEntity withdrawal(AccountEntity acc, BigDecimal value){
+		AccountEntity account = accountRepository.findAccountEntityByAccountAndAgency(acc.getAccount(), acc.getAgency());
+		BigDecimal interest = value.multiply(new BigDecimal("0.01"));
+		BigDecimal updatedValue = value.subtract(interest);
+		BigDecimal total = account.getBalance().subtract(updatedValue);
+
+		if(total.signum() < 0){
+			throw new InternalServerErrorException("Os valores (Saque + juros), não podem negativar a conta!");
+		}
+
+		account.setBalance(total.setScale(2, RoundingMode.HALF_EVEN));
+
+		ReceiptEntity receipt = ReceiptEntity.builder()
+				.value(updatedValue.setScale(2, RoundingMode.HALF_EVEN))
+				.transactionAt(new Date())
+				.originName(account.getUser().getName())
+				.build();
+
+		TransactionEntity transaction = TransactionEntity.builder()
+				.transactionType(TransactionTypeEnum.WITHDRAWAL)
+				.createdAt(new Date())
+				.originAccount(account)
 				.receipt(receipt)
 				.build();
 

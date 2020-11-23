@@ -19,6 +19,6 @@ public class ErrorDetails implements Serializable {
     private final String message;
     private final Long timesTamp;
     private final String objectName;
-    private final Map<String, ValidationErrorDetails> errors;
+    private final Map<String, ValidationErrorDetails> params;
 }
 

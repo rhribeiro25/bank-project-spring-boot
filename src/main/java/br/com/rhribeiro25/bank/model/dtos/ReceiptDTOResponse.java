@@ -39,7 +39,9 @@ public class ReceiptDTOResponse {
                 .newValue(receipt.getValue())
                 .originName(receipt.getOriginName())
                 .destinationName(receipt.getDestinationName())
-                .newBalance(receipt.getTransaction().getDestinationAccount().getBalance())
+                .newBalance(receipt.getTransaction().getDestinationAccount() != null ?
+                        receipt.getTransaction().getDestinationAccount().getBalance() :
+                        receipt.getTransaction().getOriginAccount().getBalance())
                 .transactionType(receipt.getTransaction().getTransactionType().getDescription())
                 .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(receipt.getTransactionAt()))
                 .build();
@@ -52,7 +54,9 @@ public class ReceiptDTOResponse {
                         .newValue(receipt.getValue())
                         .originName(receipt.getOriginName())
                         .destinationName(receipt.getDestinationName())
-                        .newBalance(receipt.getTransaction().getDestinationAccount().getBalance())
+                        .newBalance(receipt.getTransaction().getDestinationAccount() != null ?
+                                receipt.getTransaction().getDestinationAccount().getBalance() :
+                                receipt.getTransaction().getOriginAccount().getBalance())
                         .transactionType(receipt.getTransaction().getTransactionType().getDescription())
                         .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(receipt.getTransactionAt()))
                         .build()

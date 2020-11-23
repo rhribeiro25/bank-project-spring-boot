@@ -32,15 +32,23 @@ import java.math.BigDecimal;
 public class AccountController {
 
     @Autowired
-    private AccountService accountService ;
+    private AccountService accountService;
 
     @ApiOperation(value = "Depositar em conta", notes = "Este serviço deposita para uma conta existente no sistema!",
             response = UserDTOResponse.class, tags = "conta")
-    @PatchMapping(value = "/deposit/{value}", produces="application/json", consumes="application/json")
+    @PatchMapping(value = "/deposit", produces = "application/json", consumes = "application/json")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<?> update(@ApiParam(value = "Valor do depósito") @PathVariable("value") BigDecimal value,
-                                    @ApiParam(value = "Modelo de conta") @Valid @RequestBody AccountDTORequest account) {
-        ReceiptEntity receipt = accountService.deposit(account.returnAccountEntity(), value);
+    public ResponseEntity<?> deposit(@ApiParam(value = "Modelo de conta") @Valid @RequestBody AccountDTORequest account) {
+        ReceiptEntity receipt = accountService.deposit(account.returnAccountEntity(), account.getValue());
+        return new ResponseEntity<>(ReceiptDTOResponse.returnDtoToShow(receipt), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Sacar de conta", notes = "Este serviço saca de uma conta existente no sistema!",
+            response = UserDTOResponse.class, tags = "conta")
+    @PatchMapping(value = "/withdrawal", produces = "application/json", consumes = "application/json")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<?> withdrawal(@ApiParam(value = "Modelo de conta") @Valid @RequestBody AccountDTORequest account) {
+        ReceiptEntity receipt = accountService.withdrawal(account.returnAccountEntity(), account.getValue());
         return new ResponseEntity<>(ReceiptDTOResponse.returnDtoToShow(receipt), HttpStatus.OK);
     }
 

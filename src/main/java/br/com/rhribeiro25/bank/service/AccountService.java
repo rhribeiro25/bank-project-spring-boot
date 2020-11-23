@@ -14,4 +14,6 @@ public interface AccountService {
 
     public ReceiptEntity deposit(AccountEntity acc, BigDecimal value);
 
+    public ReceiptEntity withdrawal(AccountEntity acc, BigDecimal value);
+
 }

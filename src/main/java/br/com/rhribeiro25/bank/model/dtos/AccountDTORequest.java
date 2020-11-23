@@ -26,6 +26,8 @@ public class AccountDTORequest {
     @Size(max = 11, message = "{agency.size}")
     private String agency;
 
+    private BigDecimal value;
+
     public AccountEntity returnAccountEntity() {
         return AccountEntity.builder()
                 .account(account)
