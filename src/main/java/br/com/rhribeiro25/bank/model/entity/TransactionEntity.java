@@ -30,7 +30,7 @@ public class TransactionEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Date createdAt;
+    private Date transactionAt;
 
     @Column(nullable = false)
     private TransactionTypeEnum transactionType;

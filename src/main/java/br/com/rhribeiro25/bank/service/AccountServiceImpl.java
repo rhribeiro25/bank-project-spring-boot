@@ -1,7 +1,6 @@
 package br.com.rhribeiro25.bank.service;
 
 import br.com.rhribeiro25.bank.error.exception.InternalServerErrorException;
-import br.com.rhribeiro25.bank.error.exception.NotFoundException;
 import br.com.rhribeiro25.bank.model.entity.AccountEntity;
 import br.com.rhribeiro25.bank.model.entity.ReceiptEntity;
 import br.com.rhribeiro25.bank.model.entity.TransactionEntity;
@@ -34,8 +33,7 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private TransactionRepository transactionRepository;
 
-	public ReceiptEntity deposit(AccountEntity acc, BigDecimal value){
-		AccountEntity account = accountRepository.findAccountEntityByAccountAndAgency(acc.getAccount(), acc.getAgency());
+	public ReceiptEntity deposit(AccountEntity account, BigDecimal value){
 		BigDecimal interest = value.multiply(new BigDecimal("0.005"));
 		BigDecimal updatedValue = interest.add(value);
 		BigDecimal total = updatedValue.add(account.getBalance());
@@ -43,13 +41,12 @@ public class AccountServiceImpl implements AccountService {
 
 		ReceiptEntity receipt = ReceiptEntity.builder()
 				.value(updatedValue.setScale(2, RoundingMode.HALF_EVEN))
-				.transactionAt(new Date())
 				.destinationName(account.getUser().getName())
 				.build();
 
 		TransactionEntity transaction = TransactionEntity.builder()
 				.transactionType(TransactionTypeEnum.DEPOSIT)
-				.createdAt(new Date())
+				.transactionAt(new Date())
 				.destinationAccount(account)
 				.receipt(receipt)
 				.build();
@@ -63,10 +60,9 @@ public class AccountServiceImpl implements AccountService {
 		return receipt;
 	}
 
-	public ReceiptEntity withdrawal(AccountEntity acc, BigDecimal value){
-		AccountEntity account = accountRepository.findAccountEntityByAccountAndAgency(acc.getAccount(), acc.getAgency());
+	public ReceiptEntity withdrawal(AccountEntity account, BigDecimal value){
 		BigDecimal interest = value.multiply(new BigDecimal("0.01"));
-		BigDecimal updatedValue = value.subtract(interest);
+		BigDecimal updatedValue = value.add(interest);
 		BigDecimal total = account.getBalance().subtract(updatedValue);
 
 		if(total.signum() < 0){
@@ -77,13 +73,12 @@ public class AccountServiceImpl implements AccountService {
 
 		ReceiptEntity receipt = ReceiptEntity.builder()
 				.value(updatedValue.setScale(2, RoundingMode.HALF_EVEN))
-				.transactionAt(new Date())
 				.originName(account.getUser().getName())
 				.build();
 
 		TransactionEntity transaction = TransactionEntity.builder()
 				.transactionType(TransactionTypeEnum.WITHDRAWAL)
-				.createdAt(new Date())
+				.transactionAt(new Date())
 				.originAccount(account)
 				.receipt(receipt)
 				.build();
@@ -95,5 +90,40 @@ public class AccountServiceImpl implements AccountService {
 		account.getTransactions().add(transaction);
 		accountRepository.save(account);
 		return receipt;
+	}
+
+	public ReceiptEntity transfer(AccountEntity originAccount, AccountEntity destinationAccount, BigDecimal value){
+		if(value.compareTo(originAccount.getBalance()) == 1){
+			throw new InternalServerErrorException("Saldo insuficiente!");
+		}
+		originAccount.setBalance(originAccount.getBalance().subtract(value).setScale(2, RoundingMode.HALF_EVEN));
+		destinationAccount.setBalance(destinationAccount.getBalance().add(value).setScale(2, RoundingMode.HALF_EVEN));
+		ReceiptEntity receipt = ReceiptEntity.builder()
+				.value(value.setScale(2, RoundingMode.HALF_EVEN))
+				.originName(originAccount.getUser().getName())
+				.destinationName(destinationAccount.getUser().getName())
+				.build();
+		TransactionEntity transaction = TransactionEntity.builder()
+				.transactionType(TransactionTypeEnum.TRANSFER)
+				.transactionAt(new Date())
+				.originAccount(originAccount)
+				.destinationAccount(destinationAccount)
+				.receipt(receipt)
+				.build();
+		receipt.setTransaction(transaction);
+		originAccount.setTransactions(new HashSet<>());
+		transactionRepository.save(transaction);
+
+		originAccount.getTransactions().add(transaction);
+		accountRepository.save(originAccount);
+
+		destinationAccount.getTransactions().add(transaction);
+		accountRepository.save(destinationAccount);
+
+		return receipt;
+	}
+
+	public AccountEntity findAccountByAccountAndAgency(String account, String agency){
+		return accountRepository.findAccountEntityByAccountAndAgency(account, agency);
 	}
 }

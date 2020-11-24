@@ -22,7 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class ReceiptDTOResponse {
 
-    private BigDecimal newValue;
+    private BigDecimal realValueTransaction;
 
     private BigDecimal newBalance;
 
@@ -36,31 +36,40 @@ public class ReceiptDTOResponse {
 
     public static ReceiptDTOResponse returnDtoToShow(ReceiptEntity receipt) {
         return ReceiptDTOResponse.builder()
-                .newValue(receipt.getValue())
+                .realValueTransaction(receipt.getValue())
                 .originName(receipt.getOriginName())
                 .destinationName(receipt.getDestinationName())
-                .newBalance(receipt.getTransaction().getDestinationAccount() != null ?
-                        receipt.getTransaction().getDestinationAccount().getBalance() :
-                        receipt.getTransaction().getOriginAccount().getBalance())
+                .newBalance(ReceiptDTOResponse.returnNewBalance(receipt))
                 .transactionType(receipt.getTransaction().getTransactionType().getDescription())
-                .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(receipt.getTransactionAt()))
+                .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(receipt.getTransaction().getTransactionAt()))
                 .build();
     }
 
     public static Set<ReceiptDTOResponse> returnDtosToShow(Set<ReceiptEntity> receipts) {
         Set<ReceiptDTOResponse> receiptDTOs = new HashSet<>();
-        receipts.forEach(receipt -> receiptDTOs.add(
-                ReceiptDTOResponse.builder()
-                        .newValue(receipt.getValue())
-                        .originName(receipt.getOriginName())
-                        .destinationName(receipt.getDestinationName())
-                        .newBalance(receipt.getTransaction().getDestinationAccount() != null ?
-                                receipt.getTransaction().getDestinationAccount().getBalance() :
-                                receipt.getTransaction().getOriginAccount().getBalance())
-                        .transactionType(receipt.getTransaction().getTransactionType().getDescription())
-                        .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(receipt.getTransactionAt()))
-                        .build()
-        ));
+        receipts.forEach(receipt ->
+                receiptDTOs.add(
+                        ReceiptDTOResponse.builder()
+                                .realValueTransaction(receipt.getValue())
+                                .originName(receipt.getOriginName())
+                                .destinationName(receipt.getDestinationName())
+                                .newBalance(ReceiptDTOResponse.returnNewBalance(receipt))
+                                .transactionType(receipt.getTransaction().getTransactionType().getDescription())
+                                .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(receipt.getTransaction().getTransactionAt()))
+                                .build()
+                )
+        );
         return receiptDTOs;
+    }
+
+    public static BigDecimal returnNewBalance(ReceiptEntity receipt) {
+        BigDecimal newBalance = null;
+        if (receipt.getTransaction().getOriginAccount() != null && receipt.getTransaction().getDestinationAccount() != null)
+            newBalance = receipt.getTransaction().getOriginAccount().getBalance();
+        else if (receipt.getTransaction().getOriginAccount() != null)
+            newBalance = receipt.getTransaction().getOriginAccount().getBalance();
+        else if (receipt.getTransaction().getDestinationAccount() != null)
+            newBalance = receipt.getTransaction().getDestinationAccount().getBalance();
+        return newBalance;
     }
 }

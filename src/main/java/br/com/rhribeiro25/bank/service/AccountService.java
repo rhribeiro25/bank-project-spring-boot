@@ -16,4 +16,7 @@ public interface AccountService {
 
     public ReceiptEntity withdrawal(AccountEntity acc, BigDecimal value);
 
+    public ReceiptEntity transfer(AccountEntity accOrigin, AccountEntity accDestination, BigDecimal value);
+
+    public AccountEntity findAccountByAccountAndAgency(String account, String agency);
 }

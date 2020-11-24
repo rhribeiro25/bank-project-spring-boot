@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 
 /**
  * @author Renan Ribeiro
@@ -18,15 +18,15 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountDTORequest {
+public class AccountCreateDTORequest {
 
+    @NotBlank(message = "{account.not.blank}")
     @Size(max = 23, message = "{accout.size}")
     private String account;
 
+    @NotBlank(message = "{agency.not.blank}")
     @Size(max = 11, message = "{agency.size}")
     private String agency;
-
-    private BigDecimal value;
 
     public AccountEntity returnAccountEntity() {
         return AccountEntity.builder()

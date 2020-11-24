@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 /**
@@ -19,7 +20,7 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTORequest {
+public class UserUpdateDTORequest {
 
     @Size(max = 127, message = "{name.size}")
     private String name;
@@ -29,7 +30,8 @@ public class UserDTORequest {
 
     private UserStatusEnum status;
 
-    private AccountDTORequest account;
+    @Valid
+    private AccountUpdateDTORequest account;
 
     public UserEntity returnUserEntity() {
         AccountEntity account = null;

@@ -30,9 +30,6 @@ public class ReceiptEntity {
 
     private String destinationName;
 
-    @Column(nullable = false)
-    private Date transactionAt;
-
     @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "receipt", fetch = FetchType.LAZY)
     private TransactionEntity transaction;

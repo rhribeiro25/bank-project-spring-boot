@@ -1,7 +1,8 @@
 package br.com.rhribeiro25.bank.controller;
 
 import br.com.rhribeiro25.bank.error.exception.NotFoundException;
-import br.com.rhribeiro25.bank.model.dtos.UserDTORequest;
+import br.com.rhribeiro25.bank.model.dtos.UserCreateDTORequest;
+import br.com.rhribeiro25.bank.model.dtos.UserUpdateDTORequest;
 import br.com.rhribeiro25.bank.model.dtos.UserDTOResponse;
 import br.com.rhribeiro25.bank.model.entity.UserEntity;
 import br.com.rhribeiro25.bank.model.enums.UserStatusEnum;
@@ -40,7 +41,7 @@ public class UserController {
     @PostMapping(value = "/create", produces="application/json", consumes="application/json")
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<?> save(@ApiParam(value = "Modelo de Usuário") @Valid @RequestBody UserDTORequest user) {
+    public ResponseEntity<?> save(@ApiParam(value = "Modelo de Usuário") @Valid @RequestBody UserCreateDTORequest user) {
         UserEntity newUser = userService.save(user.returnUserEntity());
         return new ResponseEntity<>(UserDTOResponse.returnDtoToShow(newUser), HttpStatus.CREATED);
     }
@@ -51,7 +52,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> update(@ApiParam(value = "Id do Usuário") @PathVariable("id") Long id,
-                                    @ApiParam(value = "Modelo de Usuário") @Valid @RequestBody UserDTORequest user) {
+                                    @ApiParam(value = "Modelo de Usuário") @Valid @RequestBody UserUpdateDTORequest user) {
         UserEntity currentUser = this.returnExistsUser(id);
         UserEntity updateUser = user.returnUserEntity();
         UserEntity updatedUser = userService.update(currentUser, updateUser);
@@ -99,17 +100,17 @@ public class UserController {
     protected UserEntity returnExistsUser(Long id) {
         UserEntity user = userService.findById(id);
         if (user == null)
-            throw new NotFoundException("User not found by ID: " + id);
+            throw new NotFoundException("O usuário de ID = " + id + ", não pode ser encontrado.");
         return user;
     }
 
     protected void verifyExistsUser(Long id) {
         if (userService.findById(id) == null)
-            throw new NotFoundException("User not found by ID: " + id);
+            throw new NotFoundException("O usuário de ID = " + id + ", não pode ser encontrado.");
     }
 
     protected void verifyExistsUsers(Set<UserEntity> users) {
         if (users == null || users.size() == 0)
-            throw new NotFoundException("Users not found");
+            throw new NotFoundException("Usuários não encontrados.");
     }
 }
