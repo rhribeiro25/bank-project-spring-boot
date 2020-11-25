@@ -67,15 +67,19 @@ This project's a Restful API that manages bank accounts
 
 - To access PGADMIN locally open your browser and type: `http://localhost:16543`
 - login with default credentials:
-  `email: rhribeiro_25@hotmail.com`
-  `password: postgres`
+  ```
+  email: rhribeiro_25@hotmail.com
+  password: postgres
+  ```
 
 ## Database configuration in PGADMIN
 
 - then config the connection to your database:
-  `Host name/ address : pgsql`
-  `port: 5432`
-  `Maintenance database: bank-project-db`
-  `Username: postgres`
-  `Password: postgres`
+  ```
+  Host name/ address : pgsql
+  port: 5432
+  Maintenance database: bank-project-db
+  Username: postgres
+  Password: postgres
+  ```
   
