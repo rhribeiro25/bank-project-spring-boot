@@ -1,1 +1,1 @@
-web: java -jar -Dspring.profiles.active=prod -Dserver.port=$PORT target/bank-project-1.0.5.jar
+web: java -jar -Dspring.profiles.active=prod -Dserver.port=$PORT $JAVA_OPTS target/bank-project-1.0.5.jar
