@@ -53,6 +53,16 @@ This project's a Restful API that manages bank accounts
 - You can boot the whole stack by using `$ docker-compose up -d` and to access logs after with `$ docker-compose logs -f api`
 - Open your browser to access documentation: `http://localhost:9090/swagger-ui.html`
 - You can to use Postman Collection in `doc/bank-project.postman-collection.json`
+- Authentications in the API:
+```
+Consultation
+login: user
+password: bankProject@2020
+
+Modification
+login: admin
+password: bankProject@2020
+```
 
 ## Starting the project by IntelliJ
 
