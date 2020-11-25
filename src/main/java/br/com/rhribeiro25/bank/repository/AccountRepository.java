@@ -13,4 +13,6 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
     public AccountEntity findAccountEntityByAccountAndAgency(String account, String agency);
 
+    public AccountEntity findAccountEntityById(Long id);
+
 }

@@ -1,6 +1,7 @@
 package br.com.rhribeiro25.bank.model.dtos;
 
 import br.com.rhribeiro25.bank.model.entity.ReceiptEntity;
+import br.com.rhribeiro25.bank.model.entity.TransactionEntity;
 import br.com.rhribeiro25.bank.utils.Formatting;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,17 +46,17 @@ public class ReceiptDTOResponse {
                 .build();
     }
 
-    public static Set<ReceiptDTOResponse> returnDtosToShow(Set<ReceiptEntity> receipts) {
+    public static Set<ReceiptDTOResponse> returnDtosToShow(Set<TransactionEntity> transactions) {
         Set<ReceiptDTOResponse> receiptDTOs = new HashSet<>();
-        receipts.forEach(receipt ->
+        transactions.forEach(transaction ->
                 receiptDTOs.add(
                         ReceiptDTOResponse.builder()
-                                .realValueTransaction(receipt.getValue())
-                                .originName(receipt.getOriginName())
-                                .destinationName(receipt.getDestinationName())
-                                .newBalance(ReceiptDTOResponse.returnNewBalance(receipt))
-                                .transactionType(receipt.getTransaction().getTransactionType().getDescription())
-                                .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(receipt.getTransaction().getTransactionAt()))
+                                .realValueTransaction(transaction.getReceipt().getValue())
+                                .originName(transaction.getReceipt().getOriginName())
+                                .destinationName(transaction.getReceipt().getDestinationName())
+                                .newBalance(ReceiptDTOResponse.returnNewBalance(transaction.getReceipt()))
+                                .transactionType(transaction.getTransactionType().getDescription())
+                                .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(transaction.getTransactionAt()))
                                 .build()
                 )
         );

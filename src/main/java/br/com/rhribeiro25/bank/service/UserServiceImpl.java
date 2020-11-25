@@ -4,15 +4,12 @@ import br.com.rhribeiro25.bank.model.entity.UserEntity;
 import br.com.rhribeiro25.bank.model.enums.UserStatusEnum;
 import br.com.rhribeiro25.bank.repository.AccountRepository;
 import br.com.rhribeiro25.bank.repository.UserRepository;
-import br.com.rhribeiro25.bank.utils.Formatting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -43,11 +40,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<UserEntity> findByStatus(UserStatusEnum status) {
-        return userRepository.findByStatus(status);
-    }
-
-    @Override
     public UserEntity findActiveById(Long id) {
         return userRepository.findByIdAndStatus(id, UserStatusEnum.ACTIVE);
     }
@@ -70,8 +62,10 @@ public class UserServiceImpl implements UserService {
         if (updateUser.getStatus() != null) currentUser.setStatus(updateUser.getStatus());
         if (updateUser.getAccount() != null) {
             currentUser.getAccount().setUpdatedAt(new Date());
-            if (updateUser.getAccount().getAccount() != null) currentUser.getAccount().setAccount(updateUser.getAccount().getAccount());
-            if (updateUser.getAccount().getAgency() != null) currentUser.getAccount().setAgency(updateUser.getAccount().getAgency());
+            if (updateUser.getAccount().getAccount() != null)
+                currentUser.getAccount().setAccount(updateUser.getAccount().getAccount());
+            if (updateUser.getAccount().getAgency() != null)
+                currentUser.getAccount().setAgency(updateUser.getAccount().getAgency());
         }
         return userRepository.save(currentUser);
     }
@@ -80,11 +74,6 @@ public class UserServiceImpl implements UserService {
     public void delete(UserEntity user) {
         user.setStatus(UserStatusEnum.INACTIVE);
         userRepository.save(user);
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return userRepository.existsById(id);
     }
 
 }

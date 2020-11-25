@@ -2,8 +2,10 @@ package br.com.rhribeiro25.bank.service;
 
 import br.com.rhribeiro25.bank.model.entity.AccountEntity;
 import br.com.rhribeiro25.bank.model.entity.ReceiptEntity;
+import br.com.rhribeiro25.bank.model.entity.TransactionEntity;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * @author Renan Ribeiro
@@ -19,4 +21,6 @@ public interface AccountService {
     public ReceiptEntity transfer(AccountEntity accOrigin, AccountEntity accDestination, BigDecimal value);
 
     public AccountEntity findAccountByAccountAndAgency(String account, String agency);
+
+    public Set<TransactionEntity> findTransactionsByAccountId(Long id);
 }

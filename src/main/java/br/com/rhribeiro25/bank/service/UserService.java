@@ -1,7 +1,6 @@
 package br.com.rhribeiro25.bank.service;
 
 import br.com.rhribeiro25.bank.model.entity.UserEntity;
-import br.com.rhribeiro25.bank.model.enums.UserStatusEnum;
 
 import java.util.Set;
 
@@ -23,9 +22,5 @@ public interface UserService {
     public UserEntity update(UserEntity currentUser, UserEntity updateUser);
 
     public void delete(UserEntity lab);
-
-    public boolean existsById(Long id);
-
-    public Set<UserEntity> findByStatus(UserStatusEnum status);
 
 }

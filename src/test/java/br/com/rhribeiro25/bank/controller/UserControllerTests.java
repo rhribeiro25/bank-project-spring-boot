@@ -1,5 +1,6 @@
 package br.com.rhribeiro25.bank.controller;
 
+import br.com.rhribeiro25.bank.model.dtos.UserDTOResponse;
 import br.com.rhribeiro25.bank.model.entity.AccountEntity;
 import br.com.rhribeiro25.bank.model.entity.UserEntity;
 import br.com.rhribeiro25.bank.model.enums.UserStatusEnum;
@@ -122,31 +123,31 @@ public class UserControllerTests {
      * FindById
      */
     @Test
+    public void findByIdHttpStatus400() {
+        BDDMockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/bank/users/test", String.class);
+        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(400);
+    }
+
+    @Test
     public void findByIdHttpStatus401() {
         restTemplate = restTemplate.withBasicAuth("test", "test");
         BDDMockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        ResponseEntity<String> response = restTemplate.getForEntity("/api/bank/users/find-by-id/1", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/bank/users/1", String.class);
         Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(401);
     }
 
     @Test
     public void findByIdHttpStatus404() {
         BDDMockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        ResponseEntity<String> response = restTemplate.getForEntity("/api/bank/users/find-by-id/11", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/bank/users/11", String.class);
         Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(404);
-    }
-
-    @Test
-    public void findByIdHttpStatus400() {
-        BDDMockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        ResponseEntity<String> response = restTemplate.getForEntity("/api/bank/users/find-by-id/test", String.class);
-        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(400);
     }
 
     @Test
     public void findByIdHttpStatus405() {
         BDDMockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/bank/users/find-by-id/1", user, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/bank/users/1", user, String.class);
         Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(405);
     }
 
@@ -156,7 +157,7 @@ public class UserControllerTests {
     @Test
     public void createHttpStatus403() {
         BDDMockito.when(userRepository.save(user)).thenReturn(user);
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/bank/users/create", request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/bank/users", request, String.class);
         Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(403);
     }
 
@@ -164,35 +165,19 @@ public class UserControllerTests {
     public void createHttpStatus404() {
         restTemplate = restTemplate.withBasicAuth("admin", "bankProject@2020");
         BDDMockito.when(userRepository.save(user)).thenReturn(user);
-        ResponseEntity<String> response = restTemplate.postForEntity("/lab/create", request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/bank", request, String.class);
         Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(404);
-    }
-
-    @Test
-    public void createHttpStatus405() {
-        restTemplate = restTemplate.withBasicAuth("admin", "bankProject@2020");
-        BDDMockito.when(userRepository.save(user)).thenReturn(user);
-        ResponseEntity<String> response = restTemplate.getForEntity("/api/bank/users/create", String.class);
-        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(405);
-    }
-
-    @Test
-    public void createHttpStatus415() {
-        BDDMockito.when(userRepository.save(user)).thenReturn(user);
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/bank/users/create", "null", String.class);
-        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(415);
     }
 
     /**
      * Update
      */
-
     @Test
     public void updateHttpStatus405() {
         restTemplate = restTemplate.withBasicAuth("admin", "bankProject@2020");
         BDDMockito.when(userRepository.save(user)).thenReturn(user);
         BDDMockito.when(userRepository.existsById(4L)).thenReturn(true);
-        ResponseEntity<UserEntity> exchange = restTemplate.exchange("/api/bank/users/update/4", HttpMethod.POST, request,
+        ResponseEntity<UserEntity> exchange = restTemplate.exchange("/api/bank/users/4", HttpMethod.POST, request,
                 UserEntity.class);
         Assertions.assertThat(exchange.getStatusCodeValue()).isEqualTo(405);
     }
@@ -200,13 +185,12 @@ public class UserControllerTests {
     /**
      * Delete
      */
-
     @Test
     public void deleteHttpStatus401() {
         restTemplate = restTemplate.withBasicAuth("test", "bankProject@2020");
         BDDMockito.doNothing().when(userRepository).deleteById(4L);
         BDDMockito.when(userRepository.existsById(4L)).thenReturn(true);
-        ResponseEntity<String> exchange = restTemplate.exchange("/api/bank/users/delete/4", HttpMethod.DELETE, null,
+        ResponseEntity<String> exchange = restTemplate.exchange("/api/bank/users/4", HttpMethod.DELETE, null,
                 String.class);
         Assertions.assertThat(exchange.getStatusCodeValue()).isEqualTo(401);
     }
@@ -215,7 +199,7 @@ public class UserControllerTests {
     public void deleteHttpStatus403() {
         BDDMockito.doNothing().when(userRepository).deleteById(4L);
         BDDMockito.when(userRepository.existsById(4L)).thenReturn(true);
-        ResponseEntity<String> exchange = restTemplate.exchange("/api/bank/users/delete/4", HttpMethod.DELETE, null,
+        ResponseEntity<String> exchange = restTemplate.exchange("/api/bank/users/4", HttpMethod.DELETE, null,
                 String.class);
         Assertions.assertThat(exchange.getStatusCodeValue()).isEqualTo(403);
     }
@@ -225,19 +209,9 @@ public class UserControllerTests {
         restTemplate = restTemplate.withBasicAuth("admin", "bankProject@2020");
         BDDMockito.doNothing().when(userRepository).deleteById(4L);
         BDDMockito.when(userRepository.existsById(4L)).thenReturn(false);
-        ResponseEntity<String> exchange = restTemplate.exchange("/users/delete/4", HttpMethod.DELETE, null,
+        ResponseEntity<String> exchange = restTemplate.exchange("/users/4", HttpMethod.DELETE, null,
                 String.class);
         Assertions.assertThat(exchange.getStatusCodeValue()).isEqualTo(404);
     }
-
-    @Test
-    public void deleteHttpStatus405() {
-        restTemplate = restTemplate.withBasicAuth("admin", "bankProject@2020");
-        BDDMockito.doNothing().when(userRepository).deleteById(4L);
-        BDDMockito.when(userRepository.existsById(4L)).thenReturn(true);
-        ResponseEntity<String> exchange = restTemplate.exchange("/api/bank/users/delete/4", HttpMethod.GET, null, String.class);
-        Assertions.assertThat(exchange.getStatusCodeValue()).isEqualTo(405);
-    }
-
 
 }

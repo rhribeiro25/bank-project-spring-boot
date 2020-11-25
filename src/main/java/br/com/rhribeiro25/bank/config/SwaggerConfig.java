@@ -41,8 +41,8 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Bank Project Spring Boot REST API")
-                .description("Um exemplo de aplicação Spring Boot REST API")
-                .version("1.0.0")
+                .description("An example of a Spring Boot REST API application")
+                .version("1.0.5")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
                 .contact(new Contact("Renan Ribeiro", "https://www.linkedin.com/in/rhribeiro25", "rhribeiro_25@hotmail.com"))
@@ -70,22 +70,22 @@ public class SwaggerConfig {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
                     .code(400)
-                    .message("Existe algum erro na requisição!")
+                    .message("There is an error in the request")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(401)
-                    .message("Sem autorização, efetue login!")
+                    .message("Unauthorized, sign in")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(404)
-                    .message("Não encontrado!")
+                    .message("Not found")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("Ocorreu alguma erro no servidor!")
+                    .message("There was a server error")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
@@ -95,22 +95,22 @@ public class SwaggerConfig {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
                     .code(400)
-                    .message("Existe algum erro na requisição!")
+                    .message("There is an error in the request")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(401)
-                    .message("Sem autorização, efetue login!")
+                    .message("Unauthorized, sign in")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(403)
-                    .message("Proibido executar essa ação!")
+                    .message("Forbidden to perform this action")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("Ocorreu alguma erro no servidor!")
+                    .message("There was a server error")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
@@ -120,27 +120,27 @@ public class SwaggerConfig {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
                     .code(400)
-                    .message("Existe algum erro na requisição!")
+                    .message("There is an error in the request")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(401)
-                    .message("Sem autorização, efetue login!")
+                    .message("Unauthorized, sign in")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(403)
-                    .message("Proibido executar essa ação!")
+                    .message("Forbidden to perform this action")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(404)
-                    .message("Não encontrado!")
+                    .message("Not found")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("Ocorreu alguma erro no servidor!")
+                    .message("There was a server error")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
@@ -151,27 +151,27 @@ public class SwaggerConfig {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
                     .code(400)
-                    .message("Existe algum erro na requisição!")
+                    .message("There is an error in the request")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(401)
-                    .message("Sem autorização, efetue login!")
+                    .message("Unauthorized, sign in")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(403)
-                    .message("Proibido executar essa ação!")
+                    .message("Forbidden to perform this action")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(404)
-                    .message("Não encontrado!")
+                    .message("Not found")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("Ocorreu alguma erro no servidor!")
+                    .message("There was a server error")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};

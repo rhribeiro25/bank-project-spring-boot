@@ -91,8 +91,8 @@ public class UserServiceTests {
 
     @Test
     public void saveSuccess() {
-        UserEntity lab = this.users.get(0);
-        userService.save(lab);
-        verify(userRepository, times(1)).save(lab);
+        UserEntity user = this.users.get(0);
+        userService.save(user);
+        verify(userRepository, times(1)).save(user);
     }
 }
