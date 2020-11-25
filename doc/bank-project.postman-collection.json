@@ -29,12 +29,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9090/api/bank/users",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/users",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",
@@ -65,12 +63,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9090/api/bank/users/1",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/users/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",
@@ -103,7 +99,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Maria E Ribeiro\",\n    \"cpf\": \"088.758.105-51\",\n    \"account\": {\n        \"account\": \"01006274-11\",\n        \"agency\": \"2250\"\n    }\n}",
+							"raw": "{\n    \"name\": \"Jessica E Jassinto\",\n    \"cpf\": \"088.758.105-45\",\n    \"account\": {\n        \"account\": \"01006274-25\",\n        \"agency\": \"2250\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -111,12 +107,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9090/api/bank/users",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/users",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",
@@ -147,17 +141,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9090/api/bank/users/5",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/users/3",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",
 								"users",
-								"5"
+								"3"
 							]
 						}
 					},
@@ -185,7 +177,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Maria Elena Ribeiro\",\n    \"cpf\": \"088.758.105-50\",\n    \"account\": {\n        \"account\": \"01006274-10\",\n        \"agency\": \"2250\"\n    }\n}",
+							"raw": "{\n    \"name\": \"Joana Elena da Silva\",\n    \"cpf\": \"088.758.105-50\",\n    \"status\": \"ACTIVE\",\n    \"account\": {\n        \"account\": \"01006274-10\",\n        \"agency\": \"2250\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -193,17 +185,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9090/api/bank/users/5",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/users/3",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",
 								"users",
-								"5"
+								"3"
 							]
 						}
 					},
@@ -236,12 +226,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9090/api/bank/account/1/transactions",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/account/1/transactions",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",
@@ -283,12 +271,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9090/api/bank/account/deposit",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/account/deposit",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",
@@ -329,12 +315,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9090/api/bank/account/withdrawal",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/account/withdrawal",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",
@@ -375,12 +359,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9090/api/bank/account/transfer",
-							"protocol": "http",
+							"raw": "{{url}}/api/bank/account/transfer",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "9090",
 							"path": [
 								"api",
 								"bank",

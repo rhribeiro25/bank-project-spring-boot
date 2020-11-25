@@ -23,13 +23,14 @@ This project's a Restful API that manages bank accounts
 
 ## Tech Stack
 
-- Spring Boot 2.4 / MVC / Data / Security
+- Spring Boot / MVC / Data / Security
 - Docker / Docker Compose
 - PostgreSQL 11 / PgAdmin
-- JUnit 5 / Mockito
-- Java 8
+- JUnit / Mockito
+- Maven / Gradle
+- Swagger
 - Lombok
-- Swagger 2
+- Java
 
 ## Programming principles
 
@@ -51,18 +52,6 @@ This project's a Restful API that manages bank accounts
 - Should have Docker and Docker-compose installed
 - Create the network manually using: `$ docker network create bank-project-net`
 - You can boot the whole stack by using `$ docker-compose up -d` and to access logs after with `$ docker-compose logs -f api`
-- Open your browser to access documentation: `http://localhost:9090/swagger-ui.html`
-- You can to use Postman Collection in `doc/bank-project.postman-collection.json`
-- Authentications in the API:
-```
-Consultation
-login: user
-password: bankProject@2020
-
-Modification
-login: admin
-password: bankProject@2020
-```
 
 ## Starting the project by IntelliJ
 
@@ -72,6 +61,30 @@ password: bankProject@2020
 - You need to update gradle dependencies
 - To execute clean and build the project
 - Run BankProjectSpringBootApplication.java file
+
+## Documentation and Credentials
+
+- Open your browser to access documentation:
+```
+  Local: http://localhost:9090/swagger-ui.html
+  Heroku: http://api-bank-project.herokuapp.com/swagger-ui.html
+``
+- Ỳou can also use Postman Collection:
+```
+  Path: ./doc/bank-project.postman-collection.json
+  Postman environment Local: variable: url | current value: http://localhost:8080
+  Postman environment Heroku: variable: url | current value: http://api-bank-project.herokuapp.com
+```
+- Authentications to API:
+```
+Consultation
+login: user
+password: bankProject@2020
+
+Modification
+login: admin
+password: bankProject@2020
+```
 
 ## Access PGADMIN by Docker
 
@@ -84,7 +97,7 @@ password: bankProject@2020
 
 ## Database configuration in PGADMIN
 
-- then config the connection to your database:
+- then config the connection to your local database:
   ```
   Host name/ address : pgsql
   port: 5432

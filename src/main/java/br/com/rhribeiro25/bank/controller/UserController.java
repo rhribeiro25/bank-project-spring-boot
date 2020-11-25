@@ -64,7 +64,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> delete(@ApiParam(value = "User ID") @PathVariable("id") Long id) {
-        UserEntity user = this.returnExistsUser(id);
+        UserEntity user = this.returnExistsUserActive(id);
         userService.delete(user);
         return new ResponseEntity<>("Successful to delete User!", HttpStatus.OK);
     }
@@ -73,7 +73,7 @@ public class UserController {
             response = UserDTOResponse.class, tags = "Users")
     @GetMapping(value = "/{id}", produces="application/json")
     public ResponseEntity<?> findById(@ApiParam(value = "User ID") @PathVariable("id") Long id) {
-        UserEntity user = this.returnExistsUser(id);
+        UserEntity user = this.returnExistsUserActive(id);
         return new ResponseEntity<>(UserDTOResponse.returnDtoToShow(user), HttpStatus.OK);
     }
 
@@ -86,8 +86,15 @@ public class UserController {
         return new ResponseEntity<>(UserDTOResponse.returnDtosToShow(users), HttpStatus.OK);
     }
 
-    protected UserEntity returnExistsUser(Long id) {
+    protected UserEntity returnExistsUserActive(Long id) {
         UserEntity user = userService.findActiveById(id);
+        if (user == null)
+            throw new NotFoundException("User of ID " + id + ", was not found.");
+        return user;
+    }
+
+    protected UserEntity returnExistsUser(Long id) {
+        UserEntity user = userService.findById(id);
         if (user == null)
             throw new NotFoundException("User of ID " + id + ", was not found.");
         return user;
