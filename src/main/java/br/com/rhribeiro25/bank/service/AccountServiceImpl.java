@@ -53,11 +53,11 @@ public class AccountServiceImpl implements AccountService {
                 .build();
 
         receipt.setTransaction(transaction);
-        account.setTransactions(new HashSet<>());
+        if (account.getDestinationTransactions() != null)
+            account.setDestinationTransactions(new HashSet<>());
+        account.getDestinationTransactions().add(transaction);
         transactionRepository.save(transaction);
 
-        account.getTransactions().add(transaction);
-        accountRepository.save(account);
         return receipt;
     }
 
@@ -85,11 +85,11 @@ public class AccountServiceImpl implements AccountService {
                 .build();
 
         receipt.setTransaction(transaction);
-        account.setTransactions(new HashSet<>());
+        if (account.getOriginTransactions() != null)
+            account.setOriginTransactions(new HashSet<>());
+        account.getOriginTransactions().add(transaction);
         transactionRepository.save(transaction);
 
-        account.getTransactions().add(transaction);
-        accountRepository.save(account);
         return receipt;
     }
 
@@ -112,22 +112,27 @@ public class AccountServiceImpl implements AccountService {
                 .receipt(receipt)
                 .build();
         receipt.setTransaction(transaction);
-        originAccount.setTransactions(new HashSet<>());
+        originAccount.setOriginTransactions(new HashSet<>());
+        destinationAccount.setDestinationTransactions(new HashSet<>());
+
+        originAccount.getOriginTransactions().add(transaction);
+//        accountRepository.save(originAccount);
+
+        destinationAccount.getDestinationTransactions().add(transaction);
+//        accountRepository.save(destinationAccount);
+
         transactionRepository.save(transaction);
-
-        originAccount.getTransactions().add(transaction);
-        accountRepository.save(originAccount);
-
-        destinationAccount.getTransactions().add(transaction);
-        accountRepository.save(destinationAccount);
-
         return receipt;
     }
 
     public Set<TransactionEntity> findTransactionsByAccountId(Long id) {
         AccountEntity account = accountRepository.findAccountEntityById(id);
-        if (account != null) return account.getTransactions();
-        else return null;
+        Set<TransactionEntity> transactions = new HashSet<>();
+        if (account != null && account.getOriginTransactions() != null)
+            transactions.addAll(account.getOriginTransactions());
+        if (account != null && account.getDestinationTransactions() != null)
+            transactions.addAll(account.getDestinationTransactions());
+        return transactions;
     }
 
     public AccountEntity findAccountByAccountAndAgency(String account, String agency) {

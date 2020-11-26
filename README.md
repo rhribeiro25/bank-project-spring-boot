@@ -68,11 +68,11 @@ This project's a Restful API that manages bank accounts
 ```
   Local: http://localhost:9090/swagger-ui.html
   Heroku: http://api-bank-project.herokuapp.com/swagger-ui.html
-``
+```
 - Ỳou can also use Postman Collection:
 ```
   Path: ./doc/bank-project.postman-collection.json
-  Postman environment Local: variable: url | current value: http://localhost:8080
+  Postman environment Local: variable: url | current value: http://localhost:9090
   Postman environment Heroku: variable: url | current value: http://api-bank-project.herokuapp.com
 ```
 - Authentications to API:

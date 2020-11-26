@@ -54,7 +54,6 @@ public class ReceiptDTOResponse {
                                 .realValueTransaction(transaction.getReceipt().getValue())
                                 .originName(transaction.getReceipt().getOriginName())
                                 .destinationName(transaction.getReceipt().getDestinationName())
-                                .newBalance(ReceiptDTOResponse.returnNewBalance(transaction.getReceipt()))
                                 .transactionType(transaction.getTransactionType().getDescription())
                                 .transactionAt(Formatting.dateToString_dd_MM_yyyy__HH_mm_ss(transaction.getTransactionAt()))
                                 .build()
@@ -65,12 +64,19 @@ public class ReceiptDTOResponse {
 
     public static BigDecimal returnNewBalance(ReceiptEntity receipt) {
         BigDecimal newBalance = null;
+
+        // Transfer
         if (receipt.getTransaction().getOriginAccount() != null && receipt.getTransaction().getDestinationAccount() != null)
             newBalance = receipt.getTransaction().getOriginAccount().getBalance();
+
+        // Withdrawal
         else if (receipt.getTransaction().getOriginAccount() != null)
             newBalance = receipt.getTransaction().getOriginAccount().getBalance();
+
+        // Deposit
         else if (receipt.getTransaction().getDestinationAccount() != null)
             newBalance = receipt.getTransaction().getDestinationAccount().getBalance();
+
         return newBalance;
     }
 }

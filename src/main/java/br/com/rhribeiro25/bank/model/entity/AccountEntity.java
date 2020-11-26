@@ -46,7 +46,11 @@ public class AccountEntity {
     private UserEntity user;
 
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "originAccount", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private Set<TransactionEntity> transactions;
+    @OneToMany(mappedBy = "originAccount", fetch = FetchType.LAZY)
+    private Set<TransactionEntity> originTransactions;
+
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "destinationAccount", fetch = FetchType.LAZY)
+    private Set<TransactionEntity> destinationTransactions;
 
 }
