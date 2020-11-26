@@ -67,7 +67,6 @@ This project's a Restful API that manages bank accounts
 - Open your browser to access documentation:
 ```
   Local: http://localhost:9090/swagger-ui.html
-  Heroku: http://api-bank-project.herokuapp.com/swagger-ui.html
 ```
 - Ỳou can also use Postman Collection:
 ```
@@ -77,11 +76,11 @@ This project's a Restful API that manages bank accounts
 ```
 - Authentications to API:
 ```
-Consultation
+Reading
 login: user
 password: bankProject@2020
 
-Modification
+Writing
 login: admin
 password: bankProject@2020
 ```

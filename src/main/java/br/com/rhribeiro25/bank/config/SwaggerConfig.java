@@ -2,6 +2,7 @@ package br.com.rhribeiro25.bank.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@Profile("dev")
 @EnableSwagger2
 public class SwaggerConfig {
     @Bean
@@ -43,8 +45,6 @@ public class SwaggerConfig {
                 .title("Bank Project Spring Boot REST API")
                 .description("An example of a Spring Boot REST API application")
                 .version("1.0.5")
-                .license("Apache License Version 2.0")
-                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
                 .contact(new Contact("Renan Ribeiro", "https://www.linkedin.com/in/rhribeiro25", "rhribeiro_25@hotmail.com"))
                 .build();
         }
