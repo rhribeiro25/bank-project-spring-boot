@@ -2,6 +2,7 @@ package br.com.rhribeiro25.bank.model.dtos;
 
 import br.com.rhribeiro25.bank.model.entity.UserEntity;
 import br.com.rhribeiro25.bank.utils.Formatting;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTOResponse {
 
     private Long id;
