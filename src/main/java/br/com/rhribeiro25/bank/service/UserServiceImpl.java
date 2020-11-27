@@ -32,23 +32,25 @@ public class UserServiceImpl implements UserService {
     private AccountRepository accountRepository;
 
     @Override
-    @Cacheable(value = "findAll")
+    @Cacheable(value = "usersCache")
     public Set<UserEntity> findAll() {
         return userRepository.findByStatus(UserStatusEnum.ACTIVE);
     }
 
     @Override
+    @Cacheable(value = "userCache")
     public UserEntity findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
     @Override
+    @Cacheable(value = "userActiveCache")
     public UserEntity findActiveById(Long id) {
         return userRepository.findByIdAndStatus(id, UserStatusEnum.ACTIVE);
     }
 
     @Override
-    @CacheEvict(value = "findAll", allEntries = true)
+    @CacheEvict(value = { "usersCache", "userCache" , "userActiveCache"}, allEntries = true)
     public UserEntity save(UserEntity user) {
         user.getAccount().setBalance(BigDecimal.ZERO);
         user.getAccount().setCreatedAt(new Date());
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(value = "findAll", allEntries = true)
+    @CacheEvict(value = { "usersCache", "userCache" , "userActiveCache"}, allEntries = true)
     public UserEntity update(UserEntity currentUser, UserEntity updateUser) {
         currentUser.setUpdatedAt(new Date());
         if (updateUser.getName() != null) currentUser.setName(updateUser.getName());
@@ -76,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(value = "findAll", allEntries = true)
+    @CacheEvict(value = { "usersCache", "userCache" , "userActiveCache"}, allEntries = true)
     public void delete(UserEntity user) {
         user.setStatus(UserStatusEnum.INACTIVE);
         userRepository.save(user);

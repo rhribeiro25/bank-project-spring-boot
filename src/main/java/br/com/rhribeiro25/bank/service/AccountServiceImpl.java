@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
     private TransactionRepository transactionRepository;
 
     @Override
-    @CacheEvict(value = "findTransactionsByAccountId", allEntries = true)
+    @CacheEvict(value = "transactionsCache", allEntries = true)
     public ReceiptEntity deposit(AccountEntity account, BigDecimal value) {
         BigDecimal interest = value.multiply(new BigDecimal("0.005"));
         BigDecimal updatedValue = interest.add(value);
@@ -61,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @CacheEvict(value = "findTransactionsByAccountId", allEntries = true)
+    @CacheEvict(value = "transactionsCache", allEntries = true)
     public ReceiptEntity withdrawal(AccountEntity account, BigDecimal value) {
         BigDecimal interest = value.multiply(new BigDecimal("0.01"));
         BigDecimal updatedValue = value.add(interest);
@@ -89,7 +89,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @CacheEvict(value = "findTransactionsByAccountId", allEntries = true)
+    @CacheEvict(value = "transactionsCache", allEntries = true)
     public ReceiptEntity transfer(AccountEntity originAccount, AccountEntity destinationAccount, BigDecimal value) {
         if (value.compareTo(originAccount.getBalance()) == 1) {
             throw new InternalServerErrorException("Insufficient account balance!");
@@ -118,7 +118,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Cacheable(value = "findTransactionsByAccountId")
+    @Cacheable(value = "transactionsCache")
     public Set<TransactionEntity> findTransactionsByAccountId(Long id) {
         AccountEntity account = accountRepository.findAccountEntityById(id);
         Set<TransactionEntity> transactions = new HashSet<>();
