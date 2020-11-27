@@ -26,9 +26,10 @@ This project's a Restful API that manages bank accounts
 - Spring Boot / MVC / Data / Security
 - Docker / Docker Compose
 - PostgreSQL 11 / PgAdmin
+- Postman / Swagger
 - JUnit / Mockito
 - Maven / Gradle
-- Swagger
+- Ehcache
 - Lombok
 - Java
 
