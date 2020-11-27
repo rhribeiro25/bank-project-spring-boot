@@ -19,6 +19,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Renan Ribeiro
+ * @date 12/11/2020.
+ */
+
 @Configuration
 @Profile("dev")
 @EnableSwagger2

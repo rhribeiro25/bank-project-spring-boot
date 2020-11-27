@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+/**
+ * @author Renan Ribeiro
+ * @date 12/11/2020.
+ */
+
 @Configuration
 @EnableCaching
 public class EhcacheConfig{
