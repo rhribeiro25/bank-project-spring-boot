@@ -89,7 +89,7 @@ public class UserController {
     protected UserEntity returnExistsUserActive(Long id) {
         UserEntity user = userService.findActiveById(id);
         if (user == null) {
-            log.warn("User of ID " + id + ", was not found.");
+            log.error("User of ID " + id + ", was not found.");
             throw new NotFoundException("User of ID " + id + ", was not found.");
         }
         return user;
@@ -98,7 +98,7 @@ public class UserController {
     protected UserEntity returnExistsUser(Long id) {
         UserEntity user = userService.findById(id);
         if (user == null) {
-            log.warn("User of ID " + id + ", was not found.");
+            log.error("User of ID " + id + ", was not found.");
             throw new NotFoundException("User of ID " + id + ", was not found.");
         }
         return user;
@@ -106,7 +106,7 @@ public class UserController {
 
     protected void verifyExistsUsers(Set<UserEntity> users) {
         if (users == null || users.size() == 0) {
-            log.warn("Users not found.");
+            log.error("Users not found.");
             throw new NotFoundException("Users not found.");
         }
     }

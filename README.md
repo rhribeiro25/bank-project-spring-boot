@@ -39,6 +39,8 @@ This project's a Restful API that manages bank accounts
 - Hibernate Validator
 - Object Orientation
 - Exception handling
+- Cache with Ehcache
+- Logs with Log4j2
 
 ## Software architecture
 

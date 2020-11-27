@@ -9,6 +9,8 @@ import br.com.rhribeiro25.bank.repository.AccountRepository;
 import br.com.rhribeiro25.bank.repository.TransactionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -34,65 +36,61 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Override
+    @CacheEvict(value = "findAllTransactions", allEntries = true)
     public ReceiptEntity deposit(AccountEntity account, BigDecimal value) {
         BigDecimal interest = value.multiply(new BigDecimal("0.005"));
         BigDecimal updatedValue = interest.add(value);
         BigDecimal total = updatedValue.add(account.getBalance());
         account.setBalance(total.setScale(2, RoundingMode.HALF_EVEN));
-
         ReceiptEntity receipt = ReceiptEntity.builder()
                 .value(updatedValue.setScale(2, RoundingMode.HALF_EVEN))
                 .destinationName(account.getUser().getName())
                 .build();
-
         TransactionEntity transaction = TransactionEntity.builder()
                 .transactionType(TransactionTypeEnum.DEPOSIT)
                 .transactionAt(new Date())
                 .destinationAccount(account)
                 .receipt(receipt)
                 .build();
-
         receipt.setTransaction(transaction);
         if (account.getDestinationTransactions() != null)
             account.setDestinationTransactions(new HashSet<>());
         account.getDestinationTransactions().add(transaction);
         transactionRepository.save(transaction);
-
         return receipt;
     }
 
+    @Override
+    @CacheEvict(value = "findAllTransactions", allEntries = true)
     public ReceiptEntity withdrawal(AccountEntity account, BigDecimal value) {
         BigDecimal interest = value.multiply(new BigDecimal("0.01"));
         BigDecimal updatedValue = value.add(interest);
         BigDecimal total = account.getBalance().subtract(updatedValue);
-
         if (total.signum() < 0) {
             throw new InternalServerErrorException("Amounts (withdrawal + interest) cannot leave the account negative!");
         }
-
         account.setBalance(total.setScale(2, RoundingMode.HALF_EVEN));
-
         ReceiptEntity receipt = ReceiptEntity.builder()
                 .value(updatedValue.setScale(2, RoundingMode.HALF_EVEN))
                 .originName(account.getUser().getName())
                 .build();
-
         TransactionEntity transaction = TransactionEntity.builder()
                 .transactionType(TransactionTypeEnum.WITHDRAWAL)
                 .transactionAt(new Date())
                 .originAccount(account)
                 .receipt(receipt)
                 .build();
-
         receipt.setTransaction(transaction);
         if (account.getOriginTransactions() != null)
             account.setOriginTransactions(new HashSet<>());
         account.getOriginTransactions().add(transaction);
         transactionRepository.save(transaction);
-
         return receipt;
     }
 
+    @Override
+    @CacheEvict(value = "findAllTransactions", allEntries = true)
     public ReceiptEntity transfer(AccountEntity originAccount, AccountEntity destinationAccount, BigDecimal value) {
         if (value.compareTo(originAccount.getBalance()) == 1) {
             throw new InternalServerErrorException("Insufficient account balance!");
@@ -114,17 +112,14 @@ public class AccountServiceImpl implements AccountService {
         receipt.setTransaction(transaction);
         originAccount.setOriginTransactions(new HashSet<>());
         destinationAccount.setDestinationTransactions(new HashSet<>());
-
         originAccount.getOriginTransactions().add(transaction);
-//        accountRepository.save(originAccount);
-
         destinationAccount.getDestinationTransactions().add(transaction);
-//        accountRepository.save(destinationAccount);
-
         transactionRepository.save(transaction);
         return receipt;
     }
 
+    @Override
+    @Cacheable(value = "findAllTransactions")
     public Set<TransactionEntity> findTransactionsByAccountId(Long id) {
         AccountEntity account = accountRepository.findAccountEntityById(id);
         Set<TransactionEntity> transactions = new HashSet<>();

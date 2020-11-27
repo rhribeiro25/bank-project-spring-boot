@@ -86,7 +86,7 @@ public class AccountController {
     protected AccountEntity returnExistsAccount(AccountEntity acc) {
         AccountEntity account = accountService.findAccountByAccountAndAgency(acc.getAccount(), acc.getAgency());
         if (account == null) {
-            log.warn("Account of number " + acc.getAccount() + " and agency " + acc.getAccount() + " was not found.");
+            log.error("Account of number " + acc.getAccount() + " and agency " + acc.getAccount() + " was not found.");
             throw new NotFoundException("Account of number " + acc.getAccount() + " and agency " + acc.getAccount() + " was not found.");
         }
         return account;
@@ -95,7 +95,7 @@ public class AccountController {
     protected Set<TransactionEntity> returnExistsTransactions(Long id) {
         Set<TransactionEntity> transactions = accountService.findTransactionsByAccountId(id);
         if (transactions == null) {
-            log.warn("Account transactions of ID " + id + " were not found.");
+            log.error("Account transactions of ID " + id + " were not found.");
             throw new NotFoundException("Account transactions of ID " + id + " were not found.");
         }
         return transactions;

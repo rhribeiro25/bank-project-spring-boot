@@ -46,36 +46,46 @@ repositories {
 }
 
 dependencies {
-	//Spring Framework
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
+	// Spring Frameworks
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.jetbrains:annotations:19.0.0'
+
+	// Jetbrains annotations
+	implementation 'org.jetbrains:annotations:20.1.0'
+
+	// Javax cache api
+	implementation 'javax.cache:cache-api:1.1.1'
+
+	// Ehcache
+	implementation 'org.ehcache:ehcache:3.9.0'
 
 	//Swagger
-	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
-	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
+	implementation 'io.springfox:springfox-swagger2:2.6.1'
+	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
 
+	// Ehcache
+	implementation 'net.sf.ehcache:ehcache:2.10.6'
 
-
-	//Database
+	// Database
 	runtimeOnly('org.postgresql:postgresql')
 
-	//Lombok
+	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
 
-	//JUnit
+	// JUnit
 	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
 	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.7.0'
 	testCompile group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.7.0'
 	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
 	testCompile group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.7.0'
 
-	//Tests
+	// Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
