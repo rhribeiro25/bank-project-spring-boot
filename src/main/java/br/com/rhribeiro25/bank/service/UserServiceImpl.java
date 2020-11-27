@@ -6,9 +6,9 @@ import br.com.rhribeiro25.bank.repository.AccountRepository;
 import br.com.rhribeiro25.bank.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private AccountRepository accountRepository;
 
     @Override
-    @Cacheable(value = "findAllUsers")
+    @Cacheable(value = "findAll")
     public Set<UserEntity> findAll() {
         return userRepository.findByStatus(UserStatusEnum.ACTIVE);
     }
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(value = "findAllUsers", allEntries = true)
+    @CacheEvict(value = "findAll", allEntries = true)
     public UserEntity save(UserEntity user) {
         user.getAccount().setBalance(BigDecimal.ZERO);
         user.getAccount().setCreatedAt(new Date());
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(value = "findAllUsers", allEntries = true)
+    @CacheEvict(value = "findAll", allEntries = true)
     public UserEntity update(UserEntity currentUser, UserEntity updateUser) {
         currentUser.setUpdatedAt(new Date());
         if (updateUser.getName() != null) currentUser.setName(updateUser.getName());
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(value = "findAllUsers", allEntries = true)
+    @CacheEvict(value = "findAll", allEntries = true)
     public void delete(UserEntity user) {
         user.setStatus(UserStatusEnum.INACTIVE);
         userRepository.save(user);
