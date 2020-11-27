@@ -8,6 +8,7 @@ import br.com.rhribeiro25.bank.model.dtos.WithdrawalDTORequest;
 import br.com.rhribeiro25.bank.model.entity.AccountEntity;
 import br.com.rhribeiro25.bank.model.entity.ReceiptEntity;
 import br.com.rhribeiro25.bank.model.entity.TransactionEntity;
+import br.com.rhribeiro25.bank.model.enums.UserStatusEnum;
 import br.com.rhribeiro25.bank.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -66,7 +67,7 @@ public class AccountController {
     @PostMapping(value = "/transfer", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<?> transfer(@ApiParam(value = "Transaction model") @Valid  @RequestBody TransferDTORequest transaction) {
+    public ResponseEntity<?> transfer(@ApiParam(value = "Transaction model") @Valid @RequestBody TransferDTORequest transaction) {
         AccountEntity originAccount = this.returnExistsAccount(transaction.getOriginAccount().returnAccountEntity());
         AccountEntity destinationAccount = this.returnExistsAccount(transaction.getDestinationAccount().returnAccountEntity());
         ReceiptEntity receipt = accountService.transfer(originAccount, destinationAccount, transaction.getValue());
@@ -85,7 +86,7 @@ public class AccountController {
 
     protected AccountEntity returnExistsAccount(AccountEntity acc) {
         AccountEntity account = accountService.findAccountByAccountAndAgency(acc.getAccount(), acc.getAgency());
-        if (account == null) {
+        if (account == null || account.getUser().getStatus().equals(UserStatusEnum.INACTIVE)) {
             log.error("Account of number " + acc.getAccount() + " and agency " + acc.getAccount() + " was not found.");
             throw new NotFoundException("Account of number " + acc.getAccount() + " and agency " + acc.getAccount() + " was not found.");
         }
@@ -94,7 +95,7 @@ public class AccountController {
 
     protected Set<TransactionEntity> returnExistsTransactions(Long id) {
         Set<TransactionEntity> transactions = accountService.findTransactionsByAccountId(id);
-        if (transactions == null) {
+        if (transactions == null || transactions.size() == 0) {
             log.error("Account transactions of ID " + id + " were not found.");
             throw new NotFoundException("Account transactions of ID " + id + " were not found.");
         }

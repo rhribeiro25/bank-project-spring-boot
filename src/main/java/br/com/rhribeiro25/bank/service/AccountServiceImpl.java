@@ -5,6 +5,7 @@ import br.com.rhribeiro25.bank.model.entity.AccountEntity;
 import br.com.rhribeiro25.bank.model.entity.ReceiptEntity;
 import br.com.rhribeiro25.bank.model.entity.TransactionEntity;
 import br.com.rhribeiro25.bank.model.enums.TransactionTypeEnum;
+import br.com.rhribeiro25.bank.model.enums.UserStatusEnum;
 import br.com.rhribeiro25.bank.repository.AccountRepository;
 import br.com.rhribeiro25.bank.repository.TransactionRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -121,6 +122,8 @@ public class AccountServiceImpl implements AccountService {
     @Cacheable(value = "transactionsCache")
     public Set<TransactionEntity> findTransactionsByAccountId(Long id) {
         AccountEntity account = accountRepository.findAccountEntityById(id);
+        if (account == null || account.getUser().getStatus().equals(UserStatusEnum.INACTIVE))
+            return null;
         Set<TransactionEntity> transactions = new HashSet<>();
         if (account != null && account.getOriginTransactions() != null)
             transactions.addAll(account.getOriginTransactions());
