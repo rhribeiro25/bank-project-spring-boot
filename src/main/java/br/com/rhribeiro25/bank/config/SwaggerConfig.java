@@ -44,7 +44,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("Bank Project Spring Boot REST API")
                 .description("An example of a Spring Boot REST API application")
-                .version("1.0.5")
+                .version("1.0.6")
                 .contact(new Contact("Renan Ribeiro", "https://www.linkedin.com/in/rhribeiro25", "rhribeiro_25@hotmail.com"))
                 .build();
         }
