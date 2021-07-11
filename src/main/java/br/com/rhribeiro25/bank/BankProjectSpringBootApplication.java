@@ -19,7 +19,7 @@ public class BankProjectSpringBootApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BankProjectSpringBootApplication.class, args);
-		log.info("Starting Bank!");
+		log.info("🚀 Server ready at http://localhost:9090/api");
 	}
 
 }

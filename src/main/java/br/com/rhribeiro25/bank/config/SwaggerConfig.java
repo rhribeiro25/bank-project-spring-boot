@@ -75,7 +75,7 @@ public class SwaggerConfig {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
                     .code(400)
-                    .message("There is an error in the request")
+                    .message("There is an br.com.rhribeiro.baseprojectspringbatch.error in the request")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
@@ -90,7 +90,7 @@ public class SwaggerConfig {
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("There was a server error")
+                    .message("There was a server br.com.rhribeiro.baseprojectspringbatch.error")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
@@ -100,7 +100,7 @@ public class SwaggerConfig {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
                     .code(400)
-                    .message("There is an error in the request")
+                    .message("There is an br.com.rhribeiro.baseprojectspringbatch.error in the request")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
@@ -115,7 +115,7 @@ public class SwaggerConfig {
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("There was a server error")
+                    .message("There was a server br.com.rhribeiro.baseprojectspringbatch.error")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
@@ -125,7 +125,7 @@ public class SwaggerConfig {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
                     .code(400)
-                    .message("There is an error in the request")
+                    .message("There is an br.com.rhribeiro.baseprojectspringbatch.error in the request")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
@@ -145,7 +145,7 @@ public class SwaggerConfig {
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("There was a server error")
+                    .message("There was a server br.com.rhribeiro.baseprojectspringbatch.error")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
@@ -156,7 +156,7 @@ public class SwaggerConfig {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
                     .code(400)
-                    .message("There is an error in the request")
+                    .message("There is an br.com.rhribeiro.baseprojectspringbatch.error in the request")
                     .responseModel(new ModelRef("Error"))
                     .build());
             add(new ResponseMessageBuilder()
@@ -176,7 +176,7 @@ public class SwaggerConfig {
                     .build());
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("There was a server error")
+                    .message("There was a server br.com.rhribeiro.baseprojectspringbatch.error")
                     .responseModel(new ModelRef("Error"))
                     .build());
         }};
